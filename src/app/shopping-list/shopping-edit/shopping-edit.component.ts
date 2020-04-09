@@ -10,7 +10,7 @@ import {ShoppingListService} from '../shopping-list.service';
 export class ShoppingEditComponent implements OnInit {
   @ViewChild('nameInput', {static: false}) nameInputRef: ElementRef;
   @ViewChild('amountInput', {static: false}) amountInputRef: ElementRef;
-  //@Output() ingredientAdded = new EventEmitter<Ingredient>();
+
 
   constructor(private shoppingListService: ShoppingListService) { }
 
@@ -21,6 +21,9 @@ export class ShoppingEditComponent implements OnInit {
   {
      const newIngredient = new Ingredient(this.nameInputRef.nativeElement.value,
                                           this.amountInputRef.nativeElement.value);
+
+     //this sevice method passes the new ingredient to an event emitter
+     //to pass this payload to
      this.shoppingListService.addIngredient(newIngredient);
 
   }
