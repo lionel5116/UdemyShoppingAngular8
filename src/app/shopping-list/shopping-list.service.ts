@@ -50,4 +50,13 @@ export class ShoppingListService{
      this.ingredientsChagned.next(this.ingredients.slice());
   }
 
+  updateIngredient(index:number, newIngredient:Ingredient)
+  {
+     this.ingredients[index] = newIngredient;
+    //when this emits, it is subscribed to in the shopping-list component
+    //in the ngOnIt() that listens for changes to update the ingredients array
+    //this.ingredientsChagned.emit(this.ingredients.slice());
+     this.ingredientsChagned.next(this.ingredients.slice());
+  }
+
 }

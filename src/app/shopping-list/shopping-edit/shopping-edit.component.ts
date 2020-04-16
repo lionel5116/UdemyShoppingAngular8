@@ -35,12 +35,27 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
   }
 
   //we are using the Angular Template driven approach (as opposed to the Reactive Forms Approach)
-  onAddItem(form:NgForm)
+  onSubmit(form:NgForm)
   {
      const value = form.value;
      const newIngredient = new Ingredient(value.name,value.amount);
-     this.shoppingListService.addIngredient(newIngredient);
 
+     if(this.editMode)
+     {
+      this.shoppingListService.updateIngredient(this.editedItemIndex,newIngredient);
+     }
+     else
+     {
+      this.shoppingListService.addIngredient(newIngredient);
+     }
+     this.editMode = false;
+     form.reset();
+  }
+
+  clearForm()
+  {
+     this.slForm.reset();
+     this.editMode = false;
   }
 
   ngOnDestroy():void{
