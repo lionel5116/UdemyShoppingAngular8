@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup,  FormBuilder,  Validators } from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
 import {map} from 'rxjs/operators';
+import {IPosts} from '../posts.model';
 
 @Component({
   selector: 'app-test-http',
@@ -40,10 +41,12 @@ export class TestHTTPComponent implements OnInit {
 
   onFetchPosts()
   {
-    this.http.get(
+    this.http
+     .get<{[key:string] : IPosts}>(
       'https://angularcomplete2020.firebaseio.com/posts.json')
-      .pipe(map(responseData => {
-        const postsArray = [];
+      .pipe(
+        map(responseData => {
+        const postsArray: IPosts[] =[];
         for (const key in responseData)
         {
            if(responseData.hasOwnProperty(key)) {
@@ -52,9 +55,9 @@ export class TestHTTPComponent implements OnInit {
         }
         return postsArray;
       }))
-
       .subscribe(responseData => {
          console.log(responseData);
+         this.loadedPosts = responseData;
       });
 }
 
