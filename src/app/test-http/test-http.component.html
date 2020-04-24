@@ -16,13 +16,14 @@
     <div class="form-row">
       <div class="form-group">
         <div>
-          <p *ngIf="loadedPosts.length < 1">No Posts available</p>
-          <ul class="list-group" *ngIf="loadedPosts.length >= 1">
+          <p *ngIf="loadedPosts.length < 1 && !isFetching">No Posts available</p>
+          <ul class="list-group" *ngIf="loadedPosts.length >= 1 && !isFetching">
             <li class="list-group-item" *ngFor="let post of loadedPosts">
               <h1>{{post.Name }}</h1>
               <p>{{post.Content }}</p>
             </li>
           </ul>
+          <p *ngIf="isFetching">Loading...</p>
         </div>
       </div>
     </div>

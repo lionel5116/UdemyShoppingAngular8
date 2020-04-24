@@ -12,6 +12,7 @@ import {IPosts} from '../posts.model';
 export class TestHTTPComponent implements OnInit {
   loadedPosts = [];
   angForm: FormGroup;
+  isFetching = false;
 
   constructor(private fb: FormBuilder,private http: HttpClient) { }
 
@@ -41,6 +42,7 @@ export class TestHTTPComponent implements OnInit {
 
   onFetchPosts()
   {
+    this.isFetching = true;
     this.http
      .get<{[key:string] : IPosts}>(
       'https://angularcomplete2020.firebaseio.com/posts.json')
@@ -57,6 +59,7 @@ export class TestHTTPComponent implements OnInit {
       }))
       .subscribe(responseData => {
          console.log(responseData);
+         this.isFetching = false;
          this.loadedPosts = responseData;
       });
 }
