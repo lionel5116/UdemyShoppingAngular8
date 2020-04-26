@@ -11,7 +11,8 @@ export class RecipeService
 {
 recipesChanged = new Subject<Recipe[]>();
 
-  private recipes:Recipe[] = [new Recipe('Veggie Burger','Recipe for Black Bean Burger Veggie',
+   /*
+   private recipes:Recipe[] = [new Recipe('Veggie Burger','Recipe for Black Bean Burger Veggie',
                               'https://images.unsplash.com/photo-1562634382-d41bfc15aa4a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
                               [new Ingredient('Meat',1),
                                new Ingredient('Pasta',40)]),
@@ -20,10 +21,17 @@ recipesChanged = new Subject<Recipe[]>();
                                [new Ingredient('Sausage',10),
                                new Ingredient('Buns',5)])];
 
-
+  */
+ private recipes:Recipe[] = [];
   constructor(private shoppingListService:ShoppingListService)
   {
 
+  }
+
+  setRecipes(recipes:Recipe[])
+  {
+    this.recipes = recipes;
+    this.recipesChanged.next(this.recipes.slice());
   }
 
   getRecipes()

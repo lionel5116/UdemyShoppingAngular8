@@ -6,6 +6,7 @@ import {RecipeStartComponent} from './recipes/recipe-start/recipe-start.componen
 import {RecipeDetailComponent} from './recipes/recipe-detail/recipe-detail.component';
 import {RecipeEditComponent} from './recipes/recipe-edit/recipe-edit.component';
 import {TestHTTPComponent} from './test-http/test-http.component';
+import {RecipesResolverSerice} from './recipes/recipe-resolver.service';
 
 
 const routes: Routes = [
@@ -13,8 +14,14 @@ const routes: Routes = [
   {path: 'recipes',component:RecipesComponent, children: [  //below are child routes of /recipes total of 4
     {path:'',component:RecipeStartComponent},      //recipes
     {path:'new',component:RecipeEditComponent},  //recipes/new - make sure this comes before the 2 route(s) below in the order below
-    {path:':id',component:RecipeDetailComponent},  //recipes/0
-    {path:':id/edit',component:RecipeEditComponent} //recipes/0/edit
+    {
+      path:':id',
+      component:RecipeDetailComponent,
+      resolve:[RecipesResolverSerice]},  //recipes/0
+    {
+      path:':id/edit',
+      component:RecipeEditComponent,
+      resolve:[RecipesResolverSerice]} //recipes/0/edit
   ]},
   {path:'shopping-list', component:ShoppingListComponent},
   {path:'testHTTP', component:TestHTTPComponent}
