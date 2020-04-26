@@ -21,6 +21,8 @@ export class DataStorageService{
 
   fetchRecipes()
   {
+    //this is coded this way because we are using a resolver, see my evernote for the way the code
+    //used to be, before adding the resolve wire-up
     return this.http.get<Recipe[]>('https://angularcomplete2020.firebaseio.com/recipes.json')
     .pipe(map(response => {
        return response.map(recipe => {
