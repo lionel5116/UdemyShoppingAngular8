@@ -22,7 +22,8 @@ export class AuthService
    {
        //API KEY IS FROM FIRBASE-PROJECT SETTINGS - SEE EVERNOTE
        //look at the notes in evernote , it descibes how you need to format the request body payload
-       return this.http.post<AthResponseData>('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCV5M9flJU1dBKBi-bpcxORFqfTN5guKk8',
+       //**************************NEED TO GRAB API KEY FROM TEXT FILE  ****************************************************************
+       return this.http.post<AthResponseData>('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=',
           {
             email:email,
             password: password,
