@@ -7,6 +7,7 @@ import {RecipeDetailComponent} from './recipes/recipe-detail/recipe-detail.compo
 import {RecipeEditComponent} from './recipes/recipe-edit/recipe-edit.component';
 import {TestHTTPComponent} from './test-http/test-http.component';
 import {RecipesResolverSerice} from './recipes/recipe-resolver.service';
+import {AuthComponent} from './auth/auth.component';
 
 
 const routes: Routes = [
@@ -24,7 +25,8 @@ const routes: Routes = [
       resolve:[RecipesResolverSerice]} //recipes/0/edit
   ]},
   {path:'shopping-list', component:ShoppingListComponent},
-  {path:'testHTTP', component:TestHTTPComponent}
+  {path:'testHTTP', component:TestHTTPComponent},
+  {path:'auth', component:AuthComponent}
 ];
 
 @NgModule({

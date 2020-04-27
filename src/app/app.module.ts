@@ -12,6 +12,7 @@ import { ShoppingListComponent } from './shopping-list/shopping-list.component';
 import { ShoppingEditComponent } from './shopping-list/shopping-edit/shopping-edit.component';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import {DropdownDirective} from './shared/dropdown.directive';
+import {AuthComponent} from './auth/auth.component';
 
 
 //services
@@ -19,6 +20,7 @@ import {RecipeService} from './recipes/recipe.service';
 import {ShoppingListService} from './shopping-list/shopping-list.service';
 import { RecipeStartComponent } from './recipes/recipe-start/recipe-start.component';
 import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component';
+import {AuthService} from './auth/auth.service';
 //http
 import {HttpClientModule} from '@angular/common/http';
 import { TestHTTPComponent } from './test-http/test-http.component';
@@ -36,7 +38,8 @@ import { TestHTTPComponent } from './test-http/test-http.component';
     DropdownDirective,
     RecipeStartComponent,
     RecipeEditComponent,
-    TestHTTPComponent
+    TestHTTPComponent,
+    AuthComponent
   ],
   imports: [
     BrowserModule,
@@ -45,7 +48,7 @@ import { TestHTTPComponent } from './test-http/test-http.component';
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [RecipeService,ShoppingListService],
+  providers: [RecipeService,ShoppingListService,AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
