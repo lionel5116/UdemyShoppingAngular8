@@ -13,6 +13,7 @@ import { ShoppingEditComponent } from './shopping-list/shopping-edit/shopping-ed
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import {DropdownDirective} from './shared/dropdown.directive';
 import {AuthComponent} from './auth/auth.component';
+import {LoadingSpinnerComponent} from './shared/loading-spinner/loading-spinner.component';
 
 
 //services
@@ -39,7 +40,8 @@ import { TestHTTPComponent } from './test-http/test-http.component';
     RecipeStartComponent,
     RecipeEditComponent,
     TestHTTPComponent,
-    AuthComponent
+    AuthComponent,
+    LoadingSpinnerComponent
   ],
   imports: [
     BrowserModule,
