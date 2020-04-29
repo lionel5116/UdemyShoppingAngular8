@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import {AuthService} from './auth.service';
+import {AuthService,AthResponseData} from './auth.service';
+import {Observable} from 'rxjs'
+
 
 @Component({
   selector: 'app-auth',
@@ -19,28 +21,39 @@ export class AuthComponent  {
 
    onSubmit(form:NgForm)
    {
+      this.error = '';
+
       if(!form.valid){ return;}
 
       const email = form.value.email;
       const password = form.value.password;
 
+      let authObs:Observable<AthResponseData>
+
       this.isLoading = true;
 
       if(this.isLoginMode)
       {
-         //..
+        authObs = this.authSvc.login(email,password);
       }
       else
       {
-        this.authSvc.signUp(email,password).subscribe(resData => {
-        console.log(resData);
-        this.isLoading = false;
-      },
-      error => {
-        this.error = 'An error occurred!';
-        this.isLoading = false;
-      });
+        authObs = this.authSvc.signUp(email,password)
+
       }
+      //cleaner way of wiring up the observable to reuse it for (n) of conditions
+      //place the subscribe in an observable
+      authObs.subscribe(
+        resData => {
+          console.log(resData);
+          this.isLoading = false;
+        },
+        erroMessage => {
+          console.log(erroMessage);
+          this.error = erroMessage;
+          this.isLoading = false;
+        }
+      )
 
       form.reset();
    }

@@ -1,13 +1,16 @@
 import { Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {catchError} from 'rxjs/operators';
+import {throwError} from 'rxjs';
 //address: FIFA_CONFIG_DYNAMIC_GEN [AIzaSyCV5M9flJU1dBKBi-bpcxORFqfTN5guKk8]
 //these were taken from the website - firebase, for the response payload
-interface AthResponseData {
+export interface AthResponseData {
   idToken:	string;
   email:	string;
   refreshToken : string;
   expiresIn	 : string;
   localId : string;
+  registered?: boolean;
 }
 
 @Injectable({
@@ -15,21 +18,54 @@ interface AthResponseData {
 })
 export class AuthService
 {
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient) {}
 
-  }
-   signUp(email: string, password: string)
-   {
-       //API KEY IS FROM FIRBASE-PROJECT SETTINGS - SEE EVERNOTE
-       //look at the notes in evernote , it descibes how you need to format the request body payload
-       //**************************NEED TO GRAB API KEY FROM TEXT FILE  ****************************************************************
-       //REMOVE FROM CODE BEFORE PUSING TO GITHUB****************************************
-       return this.http.post<AthResponseData>('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=[API_KEY]',
+  signUp(email: string, password: string)
+  {
+       return this.http.post<AthResponseData>(
+          'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=[API_KEY]',
           {
             email:email,
             password: password,
             returnSecureToken: true
           }
-       );
+        )
+        .pipe(catchError(this.handleError));
    }
+
+   login(email:string , password: string)
+   {
+
+     return this.http.post<AthResponseData>('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=[API_KEY]',
+     {
+       email:email,
+       password: password,
+       returnSecureToken: true
+     })
+     .pipe(catchError(this.handleError));
+   }
+
+   private handleError(errorResp: HttpErrorResponse){
+    let erroMessage = 'An unknown error occured';
+      if (!errorResp.error || !errorResp.error.error)
+      {
+        return throwError(erroMessage);
+      }
+
+      switch(errorResp.error.error.message) {
+        case 'EMAIL_EXISTS':
+          erroMessage = 'This email exists already';
+          break;
+        case 'INVALID_PASSWORD':
+          erroMessage = 'Invalid Password entered!!!';
+          break;
+          case 'USER_DISABLED':
+            erroMessage = 'User account disabled!!!';
+            break;
+        default:
+          erroMessage = 'An occured!!!!';
+      }
+    return throwError(erroMessage);
+   }
+
 }
