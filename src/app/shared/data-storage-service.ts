@@ -1,15 +1,17 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {RecipeService} from '../recipes/recipe.service';
 import  {Recipe} from '../recipes/recipe.model';
-import {map,tap} from 'rxjs/operators';
+import {map,tap, take, exhaustMap} from 'rxjs/operators';
+import {AuthService} from '../auth/auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataStorageService{
   constructor(private http: HttpClient,
-              private recipeService: RecipeService) {}
+              private recipeService: RecipeService,
+              private authsrv: AuthService) {}
 
   storeRecipes() {
     const recipes = this.recipeService.getRecipes();
@@ -21,18 +23,27 @@ export class DataStorageService{
 
   fetchRecipes()
   {
-    //this is coded this way because we are using a resolver, see my evernote for the way the code
-    //used to be, before adding the resolve wire-up
-    return this.http.get<Recipe[]>('https://angularcomplete2020.firebaseio.com/recipes.json')
-    .pipe(map(response => {
-       return response.map(recipe => {
-         return {...recipe,ingredients: recipe.ingredients ? recipe.ingredients : []}
-       })
+    //I changed my password over to BL on 4/30/2020 for the firebase pwd
+    //below is advanced observable chaining ...
+    //take means I only want one subscription only for the user
+    //pipe means I want to do some more work once the request comes back
+    //below is also coded this way because we are using resolver (middleware) wireup
+    return this.authsrv.user.pipe(take(1),exhaustMap(user => {
+      return this.http.get<Recipe[]>('https://angularcomplete2020.firebaseio.com/recipes.json',
+         {
+           params: new HttpParams().set('auth', user.token)
+         }
+      );
     }),
-    tap( recipies => {
-      this.recipeService.setRecipes(recipies);
-    })
-    )
-  }
+    map(response => {
+      return response.map(recipe => {
+        return {...recipe,ingredients: recipe.ingredients ? recipe.ingredients : []}
+      })
+   }), //map
+     tap( recipies => {
+       this.recipeService.setRecipes(recipies);
+     }) //tap
+    );  //pipe
 
+  }
 }
