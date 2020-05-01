@@ -21,6 +21,7 @@ export class DataStorageService{
      });
   }
 
+  /*
   fetchRecipes()
   {
     //I changed my password over to BL on 4/30/2020 for the firebase pwd
@@ -46,4 +47,30 @@ export class DataStorageService{
     );  //pipe
 
   }
+  */
+
+  fetchRecipes()
+  {
+    //I changed my password over to BL on 4/30/2020 for the firebase pwd
+    //below is advanced observable chaining ...
+    //take means I only want one subscription only for the user
+    //pipe means I want to do some more work once the request comes back
+    //below is also coded this way because we are using resolver (middleware) wireup
+    //i modified the code from the commented out code above because we are using an HTTP INTERCEPTOR NOW *****
+      return this.http.get<Recipe[]>('https://angularcomplete2020.firebaseio.com/recipes.json'
+      )
+    .pipe(
+      map(response => {
+        return response.map(recipe => {
+         return {
+          ...recipe,ingredients: recipe.ingredients ? recipe.ingredients : []}
+      })
+     }), //map
+    tap( recipies => {
+        this.recipeService.setRecipes(recipies);
+      }) //tap
+    );  //pipe
+
+  }
+
 }

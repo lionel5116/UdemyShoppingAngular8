@@ -3,6 +3,7 @@ import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {catchError,tap} from 'rxjs/operators';
 import {throwError,Subject,BehaviorSubject} from 'rxjs';
 import { User } from './user.model';
+import { Router } from '@angular/router';
 //address: FIFA_CONFIG_DYNAMIC_GEN [AIzaSyCV5M9flJU1dBKBi-bpcxORFqfTN5guKk8]
 //these were taken from the website - firebase, for the response payload
 export interface AthResponseData {
@@ -21,12 +22,12 @@ export class AuthService
 {
   //Behaviour subject is the same as Subject, the only difference is that it allows you take either one subscription or many ongoing subscriptions
   user = new BehaviorSubject<User>(null);
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,private router:Router) {}
 
   signUp(email: string, password: string)
   {
        return this.http.post<AthResponseData>(
-          'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=[API_KEY]',
+          'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCV5M9flJU1dBKBi-bpcxORFqfTN5guKk8',
           {
             email:email,
             password: password,
@@ -46,7 +47,7 @@ export class AuthService
    login(email:string , password: string)
    {
 
-     return this.http.post<AthResponseData>('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=[API_KEY]',
+     return this.http.post<AthResponseData>('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCV5M9flJU1dBKBi-bpcxORFqfTN5guKk8',
      {
        email:email,
        password: password,
@@ -62,6 +63,10 @@ export class AuthService
      );
    }
 
+   logOut(){
+     this.user.next(null);
+     this.router.navigate(['/auth']);
+   }
 
    private handleAuthentication(email: string,userId: string, token:string, expiresIn: number)
    {

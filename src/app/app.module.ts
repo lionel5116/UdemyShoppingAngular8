@@ -22,8 +22,9 @@ import {ShoppingListService} from './shopping-list/shopping-list.service';
 import { RecipeStartComponent } from './recipes/recipe-start/recipe-start.component';
 import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component';
 import {AuthService} from './auth/auth.service';
+import {AuthIntercepterService} from './auth/auth-intercepter.service';
 //http
-import {HttpClientModule} from '@angular/common/http';
+import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { TestHTTPComponent } from './test-http/test-http.component';
 
 @NgModule({
@@ -50,7 +51,16 @@ import { TestHTTPComponent } from './test-http/test-http.component';
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [RecipeService,ShoppingListService,AuthService],
+  providers: [RecipeService,
+             ShoppingListService,
+             AuthService,
+             AuthIntercepterService,
+             {
+               provide: HTTP_INTERCEPTORS,
+               useClass:AuthIntercepterService,
+               multi:true
+              }
+            ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
