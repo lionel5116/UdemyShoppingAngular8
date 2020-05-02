@@ -27,7 +27,7 @@ export class AuthService
   signUp(email: string, password: string)
   {
        return this.http.post<AthResponseData>(
-          'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=[API_KEY]',
+          'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=[auth_key]',
           {
             email:email,
             password: password,
@@ -47,13 +47,14 @@ export class AuthService
    login(email:string , password: string)
    {
 
-     return this.http.post<AthResponseData>('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=[API_KEY]',
+     return this.http.post<AthResponseData>('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=[auth_key]',
      {
        email:email,
        password: password,
        returnSecureToken: true
      })
-     .pipe(catchError(this.handleError),tap(resData => {  //the tap() method allows us to do something else with the response
+     .pipe(catchError(this.handleError),
+      tap(resData => {  //the tap() method allows us to do something else with the response
       this.handleAuthentication(resData.email,
                                 resData.localId,
                                 resData.idToken,

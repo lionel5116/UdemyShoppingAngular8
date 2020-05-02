@@ -14,6 +14,7 @@ import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import {DropdownDirective} from './shared/dropdown.directive';
 import {AuthComponent} from './auth/auth.component';
 import {LoadingSpinnerComponent} from './shared/loading-spinner/loading-spinner.component';
+import {AlertComponent} from './shared/alert/alert.component';
 
 
 //services
@@ -42,7 +43,8 @@ import { TestHTTPComponent } from './test-http/test-http.component';
     RecipeEditComponent,
     TestHTTPComponent,
     AuthComponent,
-    LoadingSpinnerComponent
+    LoadingSpinnerComponent,
+    AlertComponent
   ],
   imports: [
     BrowserModule,

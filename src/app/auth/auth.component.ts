@@ -15,6 +15,11 @@ export class AuthComponent  {
   error: string = null;
   constructor(private authSvc:AuthService, private router:Router ) { }
 
+  onHandleError()
+  {
+    this.error = null;
+  }
+
    onSwitchMode()
    {
       this.isLoginMode = !this.isLoginMode; //reverses the boolean state
