@@ -4,6 +4,7 @@ import {catchError,tap} from 'rxjs/operators';
 import {throwError,Subject,BehaviorSubject} from 'rxjs';
 import { User } from './user.model';
 import { Router } from '@angular/router';
+import {environment} from '../../environments/environment';
 //address: FIFA_CONFIG_DYNAMIC_GEN [AIzaSyCV5M9flJU1dBKBi-bpcxORFqfTN5guKk8]
 //these were taken from the website - firebase, for the response payload
 export interface AthResponseData {
@@ -27,7 +28,7 @@ export class AuthService
   signUp(email: string, password: string)
   {
        return this.http.post<AthResponseData>(
-          'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=[auth_key]',
+          'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=' + environment.firebaseAPIKey,
           {
             email:email,
             password: password,
@@ -47,7 +48,7 @@ export class AuthService
    login(email:string , password: string)
    {
 
-     return this.http.post<AthResponseData>('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=[auth_key]',
+     return this.http.post<AthResponseData>('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=' + environment.firebaseAPIKey,
      {
        email:email,
        password: password,

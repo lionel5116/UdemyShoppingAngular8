@@ -25,6 +25,9 @@
     "tslib": "^1.10.0",
     "zone.js": "~0.9.1"
   },
+  "resolutions": {
+    "@babel/preset-env": "^7.8.7"
+  },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.803.18",
     "@angular/cli": "~8.3.18",
