@@ -51,7 +51,6 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
      {
         //this.shoppingListService.addIngredient(newIngredient);  -- --CHANGED FOR NGRX WIREUP ******
         this.store.dispatch(new  ShoppingListActions.AddIngredient(newIngredient));
-
      }
      this.editMode = false;
      form.reset();
