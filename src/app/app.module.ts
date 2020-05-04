@@ -28,6 +28,10 @@ import {AuthIntercepterService} from './auth/auth-intercepter.service';
 import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { TestHTTPComponent } from './test-http/test-http.component';
 
+//NGRX
+import {StoreModule} from '@ngrx/store';
+import {shoppingListReducer} from './shopping-list/store/shopping-list.reducer';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -49,6 +53,7 @@ import { TestHTTPComponent } from './test-http/test-http.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    StoreModule.forRoot({shoppingList: shoppingListReducer}),
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule
