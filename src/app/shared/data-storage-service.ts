@@ -21,33 +21,6 @@ export class DataStorageService{
      });
   }
 
-  /*
-  fetchRecipes()
-  {
-    //I changed my password over to BL on 4/30/2020 for the firebase pwd
-    //below is advanced observable chaining ...
-    //take means I only want one subscription only for the user
-    //pipe means I want to do some more work once the request comes back
-    //below is also coded this way because we are using resolver (middleware) wireup
-    return this.authsrv.user.pipe(take(1),exhaustMap(user => {
-      return this.http.get<Recipe[]>('https://angularcomplete2020.firebaseio.com/recipes.json',
-         {
-           params: new HttpParams().set('auth', user.token)
-         }
-      );
-    }),
-    map(response => {
-      return response.map(recipe => {
-        return {...recipe,ingredients: recipe.ingredients ? recipe.ingredients : []}
-      })
-   }), //map
-     tap( recipies => {
-       this.recipeService.setRecipes(recipies);
-     }) //tap
-    );  //pipe
-
-  }
-  */
 
   fetchRecipes()
   {
