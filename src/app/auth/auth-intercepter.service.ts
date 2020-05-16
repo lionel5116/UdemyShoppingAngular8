@@ -25,6 +25,7 @@ export class AuthIntercepterService implements HttpInterceptor{
       }
       const modifiedReq = req.clone(
        {
+         //this intercepts the request and addes the token that firebase needs
          params: new HttpParams().set('auth',user.token)
        }
       );

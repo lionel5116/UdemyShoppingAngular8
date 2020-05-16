@@ -25,7 +25,7 @@ export class DataStorageService{
   fetchRecipes()
   {
     //the auth-interceptor handles the token information/authentication to allow you fetch
-    //from the server
+    //from the server, in the header.component, fetchRecipes() on the menu select is hidden based on !isAuthenticated
       return this.http.get<Recipe[]>('https://angularcomplete2020.firebaseio.com/recipes.json'
       )
     .pipe(
